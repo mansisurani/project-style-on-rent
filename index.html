@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Style on Rent</title>
+
+    <link rel="stylesheet" href="pro.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+    <nav class="navbar">
+
+        <div class="logo">
+            <img src="logo.jpeg" alt="Style on Rent">
+            <span>Style on Rent</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#wishlist">Wishlist ❤️</a></li>
+            <li><a href="#orders">Orders</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+
+            <button onclick="openLogin()" class="login-btn">
+                👤 Login
+            </button>
+
+            <button onclick="openCart()" class="cart-btn">
+                🛒 Cart <span id="cartCount">0</span>
+            </button>
+
+        </div>
+
+    </nav>
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="hero">
+
+    <h1>Style on Rent 👗</h1>
+
+    <p>
+        Beautiful outfits for every special occasion.
+        Choose your favourite outfit and rent it easily.
+    </p>
+
+    <a href="#collection" class="shop-btn">
+        Explore Collection
+    </a>
+
+</section>
+
+
+<!-- ================= CATEGORY ================= -->
+
+<section class="category-section">
+
+    <h2>Shop By Category</h2>
+
+    <div class="categories">
+
+        <button onclick="filterDresses('all')">All</button>
+
+        <button onclick="filterDresses('engagement')">
+            Engagement
+        </button>
+
+        <button onclick="filterDresses('haldi')">
+            Haldi
+        </button>
+
+        <button onclick="filterDresses('mehndi')">
+            Mehndi
+        </button>
+
+        <button onclick="filterDresses('function')">
+            Function
+        </button>
+
+        <button onclick="filterDresses('reception')">
+            Reception
+        </button>
+
+        <button onclick="filterDresses('sisters')">
+            Sisters
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= COLLECTION ================= -->
+
+<section id="collection" class="collection">
+
+    <h2>Our Collection</h2>
+
+    <p class="collection-text">
+        Find the perfect outfit for your special day.
+    </p>
+
+    <div class="dress-container" id="dressContainer"></div>
+
+</section>
+
+
+<!-- ================= WISHLIST ================= -->
+
+<section id="wishlist" class="wishlist-section">
+
+    <h2>❤️ My Wishlist</h2>
+
+    <div id="wishlistContainer" class="wishlist-container">
+
+        <p class="empty-message">
+            Your wishlist is empty.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BOOKING ================= -->
+
+<section id="contact" class="booking">
+
+    <h2>📅 Book Your Order</h2>
+
+    <p>Select your rental period and calculate your total price.</p>
+
+    <form onsubmit="submitOrder(event)">
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Your Name"
+            required
+        >
+
+        <label for="size">Select Size:</label>
+<select id="size" name="size">
+    <option value="">Select Size</option>
+    <option value="S">S</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <input
+            type="text"
+            id="address"
+            placeholder="Address"
+            required
+        >
+
+        <input
+            type="tel"
+            id="mobile"
+            placeholder="Mobile Number"
+            pattern="[0-9]{10}"
+            required
+        >
+
+        <label>Rental Date</label>
+
+        <input
+            type="date"
+            id="rentDate"
+            required
+            onchange="calculateRental()"
+        >
+
+        <label>Return Date</label>
+
+        <input
+            type="date"
+            id="returnDate"
+            required
+            onchange="calculateRental()"
+        >
+
+        <div class="price-box">
+
+            <p>
+                Rental Days:
+                <strong id="rentalDays">0</strong>
+            </p>
+
+            <p>
+                Daily Rent:
+                ₹<strong id="dailyRent">0</strong>
+            </p>
+
+            <p class="total-price">
+                Total Price:
+                ₹<strong id="totalPrice">0</strong>
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            onclick="checkAvailability()"
+            class="availability-btn"
+        >
+            🔍 Check Availability
+        </button>
+
+        <p id="availabilityMessage"></p>
+
+        <button type="submit">
+            Continue to Payment 💳
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- ================= ORDERS ================= -->
+
+<section id="orders" class="orders-section">
+
+    <h2>📦 My Orders</h2>
+
+    <div id="ordersContainer">
+
+        <p class="empty-message">
+            No orders placed yet.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= REVIEWS ================= -->
+
+<section id="reviews" class="reviews-section">
+
+    <h2>⭐ Customer Reviews</h2>
+
+    <div id="reviewsContainer"></div>
+
+    <div class="review-form">
+
+        <h3>Write a Review</h3>
+
+        <input
+            type="text"
+            id="reviewName"
+            placeholder="Your Name"
+        >
+
+        <select id="reviewRating">
+
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+
+        </select>
+
+        <textarea
+            id="reviewText"
+            placeholder="Write your review..."
+        ></textarea>
+
+        <button onclick="addReview()">
+            Submit Review
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section id="how" class="how-section">
+
+    <h2>How It Works</h2>
+
+    <div class="steps">
+
+        <div class="step">
+
+            <h3>1️⃣ Choose</h3>
+
+            <p>
+                Select your favourite outfit.
+            </p>
+
+        </div>
+
+        <div class="step">
+
+            <h3>2️⃣ Select Dates</h3>
+
+            <p>
+                Choose how many days you want the outfit.
+            </p>
+
+        </div>
+
+        <div class="step">
+
+            <h3>3️⃣ Pay</h3>
+
+            <p>
+                Complete the demo online payment.
+            </p>
+
+        </div>
+
+        <div class="step">
+
+            <h3>4️⃣ Wear</h3>
+
+            <p>
+                Wear the outfit on your special occasion.
+            </p>
+
+        </div>
+
+        <div class="step">
+
+            <h3>5️⃣ Return</h3>
+
+            <p>
+                Return the outfit on the selected date.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LOGIN MODAL ================= -->
+
+<div id="loginModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeLogin()">×</span>
+
+        <h2>👤 Login / Profile</h2>
+
+        <input
+            type="text"
+            id="loginName"
+            placeholder="Enter your name"
+        >
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Enter your email"
+        >
+
+        <button onclick="loginUser()">
+            Login
+        </button>
+
+        <div id="profileInfo"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= CART MODAL ================= -->
+
+<div id="cartModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeCart()">×</span>
+
+        <h2>🛒 Your Cart</h2>
+
+        <div id="cartItems"></div>
+
+        <h3>
+            Cart Total:
+            ₹<span id="cartTotal">0</span>
+        </h3>
+
+        <button onclick="goToBooking()">
+            Proceed to Booking
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= PAYMENT MODAL ================= -->
+
+<div id="paymentModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closePayment()">×</span>
+
+        <h2>💳 Online Payment</h2>
+
+        <p>
+            Amount to Pay:
+            ₹<strong id="paymentAmount">0</strong>
+        </p>
+
+        <select id="paymentMethod">
+
+            <option value="upi">
+                UPI
+            </option>
+
+            <option value="card">
+                Debit / Credit Card
+            </option>
+
+            <option value="cod">
+                Pay at Store
+            </option>
+
+        </select>
+
+        <input
+            type="text"
+            id="paymentDetails"
+            placeholder="Enter UPI ID / Card Number"
+        >
+
+        <button onclick="makePayment()">
+            Pay Now
+        </button>
+
+        <p id="paymentMessage"></p>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h3>
+        Style on Rent 👗
+    </h3>
+
+    <p>
+        Dress beautifully. Rent affordably.
+    </p>
+
+    <p>
+        📱 Contact: 99999 99999
+    </p>
+
+    <p>
+        📸 Instagram: @style.2907
+    </p>
+
+    <p>
+        © 2026 Style on Rent. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script src="pro.js"></script>
+
+</body>
+
+</html>
